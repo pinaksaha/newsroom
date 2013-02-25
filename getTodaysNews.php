@@ -25,8 +25,9 @@
 		$content = fread($handel, filesize($newsFile));
 		$content = unserialize($content);
 		fclose($handel);
-		
+		print "<pre>";
 		print_r($content);
+		print "</pre>";
 	}
 	
 	
