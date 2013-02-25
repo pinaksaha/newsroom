@@ -17,7 +17,7 @@
     {
 	    $content = explode("src=", $content);
 	    $content = explode('width="630" />',$content[1]);
-	    //$content[1] = strip_tags($content[1],"");
+	    $content[1] = strip_tags($content[1],"<a>");
 	    return $content;
     }
     
@@ -55,6 +55,7 @@
 		$news = new Article($json[entry][$i][title],$bodyContent[1],$bodyContent[0]);
 		$newsArray[] = clone $news;
 	}
+	
 	$newsArray = json_encode($newsArray);
 	$newsArray = json_decode($newsArray);
 	$newsArray = serialize($newsArray);
