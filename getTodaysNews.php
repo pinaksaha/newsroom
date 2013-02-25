@@ -24,8 +24,9 @@
 		$handel = fopen($newsFile, "r");
 		$content = fread($handel, filesize($newsFile));
 		$content = unserialize($content);
-		var_dump($content);
 		fclose($handel);
+		
+		print_r($content);
 	}
 	
 	

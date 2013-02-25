@@ -1,7 +1,31 @@
 <?php
+    class Article
+    {
+	    public $__title;
+	    public $__content;
+	    public $__imgUrl;
+	    function __construct($title,$content,$imgUrl)
+	    
+	    {
+		    $this->__title = $title;
+		    $this->__content = $content;
+		    $this->__imgUrl = $imgUrl;
+	    }
+    }
+    
+    function sanitize($content)
+    {
+	    $content = explode("src=", $content);
+	    $content = explode('width="630" />',$content[1]);
+	    //$content[1] = strip_tags($content[1],"");
+	    return $content;
+    }
+    
 	$verge = simplexml_load_file('http://www.theverge.com/rss/index.xml');
     $newsArray;
+
     
+
     $dir = './news/'.date("m_d_Y").'/';
     if(!is_dir($dir))
     {
@@ -13,20 +37,6 @@
     echo $fileName;
     
     $handel = fopen($fileName, 'x+');
-    
-    class Article
-    {
-	    public $__title;
-	    public $__content;
-	    public $__author;
-	    function __construct($title,$content,$author)
-	    
-	    {
-		    $this->__title = $title;
-		    $this->__content = $content;
-		    $this->__author = $author;
-	    }
-    }
     
     
     $img = $json;
@@ -40,23 +50,16 @@
 	for($i= 0; $i < $count; $i++)
 	{
 		
-		
-		$author="";
-		
-		for($j=0;$j<count($json[entry][$i][author]);$j++)
-		{
-		 $author = $author ." " .$json[entry][$i][author][$j][name];
-		 print($author);
-		}
-		
-		$news = new Article($json[entry][$i][title],$json[entry][$i][content],$author);
-		//$news = serialize($news);
+		$bodyContent = $json[entry][$i][content];
+		$bodyContent = sanitize($bodyContent);
+		$news = new Article($json[entry][$i][title],$bodyContent[1],$bodyContent[0]);
 		$newsArray[] = clone $news;
-		
-		$author = "";
 	}
+	$newsArray = json_encode($newsArray);
+	$newsArray = json_decode($newsArray);
 	$newsArray = serialize($newsArray);
 	fwrite($handel,$newsArray);
 	fclose($handel);
-	var_dump($currentNews);
+
+	
 ?>
