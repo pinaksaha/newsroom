@@ -3,7 +3,11 @@
     
     
     $dir = './news/'.date("m_d_Y").'/';
-    mkdir($dir,0777);
+    if(!is_dir($dir))
+    {
+    	mkdir($dir,0777);
+    }
+    
     $fileName = $dir. date("H_i_s").".json";
     
     echo $fileName;
