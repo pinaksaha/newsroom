@@ -1,6 +1,6 @@
 <?php
 	$verge = simplexml_load_file('http://www.theverge.com/rss/index.xml');
-    
+    $newsArray;
     
     $dir = './news/'.date("m_d_Y").'/';
     if(!is_dir($dir))
@@ -50,11 +50,13 @@
 		}
 		
 		$news = new Article($json[entry][$i][title],$json[entry][$i][content],$author);
-		$news = serialize($news);
+		//$news = serialize($news);
+		$newsArray[] = clone $news;
 		
-		fwrite($handel,$news);
 		$author = "";
 	}
+	$newsArray = serialize($newsArray);
+	fwrite($handel,$newsArray);
 	fclose($handel);
 	var_dump($currentNews);
 ?>
