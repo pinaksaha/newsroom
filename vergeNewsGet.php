@@ -1,4 +1,5 @@
 <?php
+	error_reporting(0);
     class Article
     {
 	    public $__title;
@@ -20,24 +21,29 @@
 	    $content[1] = strip_tags($content[1],"<a>");
 	    return $content;
     }
-    
+   
+   	print "Getting Verge data. \n";
 	$verge = simplexml_load_file('http://www.theverge.com/rss/index.xml');
     $newsArray;
 
     
-
+    print "Creating Storage Area. \n";
+    
     $dir = './news/'.date("m_d_Y").'/';
     if(!is_dir($dir))
     {
     	mkdir($dir,0777);
     }
     
+    print "Creating file. \n";
+    
     $fileName = $dir. date("H_i_s").".json";
     
-    echo $fileName;
+    //echo $fileName;
     
     $handel = fopen($fileName, 'x+');
     
+    print "Storing data to file. \n";
     
     $img = $json;
 	$json = json_encode($verge);
@@ -61,6 +67,7 @@
 	$newsArray = serialize($newsArray);
 	fwrite($handel,$newsArray);
 	fclose($handel);
-
+	
+	print "done!!! \n";
 	
 ?>
