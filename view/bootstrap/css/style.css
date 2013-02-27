@@ -1,0 +1,8 @@
+ul,li
+{
+		
+	display: list-item;
+	list-style-type: none;
+	margin: 2em;
+	margin-top: 2em;
+}

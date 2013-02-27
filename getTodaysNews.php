@@ -2,7 +2,7 @@
 	
 	function getNews()
 	{
-		$dir = './news/';
+		$dir = '../news/';
 		
 		if(is_dir($dir))
 		{	
@@ -22,7 +22,7 @@
 		for($i=0;$i<$num;$i++)
 		{
 			$newsFile = $dir."/" . $filesDir[$i];
-			print($newsFile);
+			//print($newsFile);
 			$handel = fopen($newsFile, "r");
 			$content = fread($handel, filesize($newsFile));
 			$content = unserialize($content);
@@ -31,5 +31,6 @@
 		
 		return $content;
 	}	
+	
 	
 ?>
